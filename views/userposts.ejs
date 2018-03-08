@@ -1,0 +1,97 @@
+<% include _header %>
+<% if(userLogged === undefined){%>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="/">Pintrest Clone</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto ">
+      <li class="nav-item active a">
+        <a class="nav-link" href="/auth/twitter">Login <span class="sr-only">(current)</span></a>
+      </li>
+
+    </ul>
+
+  </div>
+  </nav>
+
+<%} else { %>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Pintrest Clone</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto ">
+      <li class="nav-item active a">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item a">
+        <a class="nav-link" href="/getPost/<%= currentUser.twitter.username%>">Your Posts</a>
+      </li>
+      <li class="nav-item a">
+        <a class="nav-link" href="/create">Add post</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-right">
+
+      <li class="nav-item a">
+        <a href="/profile" class="nav-link"><img src="<%= currentUser.twitter.profilePic%>" class="img-responsive" alt="profilepic"> <%= currentUser.twitter.username%></a>
+      </li>
+      <li class="nav-item a">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+  </nav>
+<% } %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <h1 class="text-center"  style="background-color:#17202A;color:white">
+        <div class="jumbotron"><%= username%>'s Posts</div>
+      </h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+
+    <div class="col-xs-12 col-md-12">
+      <div class="row masonry">
+        <% posts.forEach(function(value){ %>
+          <div class="col-xs-3 col-md-3 dude">
+            <div class="card text-white bg-primary mb-3" >
+              <div class="card-header"><img src="<%= value.image%>" alt="" class="img-responsive" style="width:100%"></div>
+              <div class="card-body">
+                <h4 class="card-title"><a href="" style="color:#A9CCE3;"><%= value.username%></a></h4>
+                <p class="card-text"><%= value.description%>.</p>
+                <%if(userLogged !== undefined){
+                 if(currentUser.twitter.username === username){%>
+                <form action="/getPost/<%= username%>/<%= value._id%>" method="post">
+                  <button class="btn btn-danger" >Delete</button>
+                </form>
+                <%} }else {%>
+                  <form action="/like/<%= value._id%>" method="post">
+                    <button class="btn btn-success">Like</button>
+                  </form>
+                  <span  style="float:right;background-color:green;padding:10px;border-radius:50px;margin-top:-45px;"><%= value.likes%> Likes</span>
+                <%}%>
+              </div>
+          </div>
+          </div>
+        <% })%>%>
+      </div>
+    </div>
+</div>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('.masonry').masonry({
+        itemSelector: '.dude'
+      });
+});
+</script>
+<% include _footer%>

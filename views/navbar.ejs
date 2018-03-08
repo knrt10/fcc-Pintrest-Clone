@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<a class="navbar-brand" href="/">Pintrest Clone</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarColor01">
+  <ul class="navbar-nav mr-auto ">
+    <li class="nav-item active a">
+      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item a">
+      <a class="nav-link" href="/getPost/<%= currentUser.twitter.username%>">Your Posts</a>
+    </li>
+    <li class="nav-item a">
+      <a class="nav-link" href="/create">Add post</a>
+    </li>
+  </ul>
+  <ul class="navbar-nav mr-right">
+
+    <li class="nav-item a">
+      <a href="/getPost/<%= currentUser.twitter.username%>" class="nav-link"><img src="<%= currentUser.twitter.profilePic%>" class="img-responsive" alt="profilepic"> <%= currentUser.twitter.username%></a>
+    </li>
+    <li class="nav-item a">
+      <a class="nav-link" href="/logout">Logout</a>
+    </li>
+  </ul>
+</div>
+</nav>
